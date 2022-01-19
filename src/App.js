@@ -8,7 +8,6 @@ function App() {
             <div className="wrapper">
                 <Pomodoro/>
             </div>
-
         </div>
     );
 }
