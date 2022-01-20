@@ -1,3 +1,35 @@
 .widget
   max-width: 500px
   margin: 0 auto
+
+.dropdown
+  position: relative
+  width: 500px
+  margin: 0 auto
+  background-color: #e78a8a
+  border-radius: 5px
+  height: 40px
+  overflow: hidden
+  transition: .3s
+  &.active
+    height: 400px
+    & .icon
+      transform: rotate(-90deg)
+
+.title
+  display: flex
+  justify-content: space-between
+  text-align: left
+  width: auto
+  background-color: #e78a8a
+  padding: 10px
+  border-radius: 5px
+  cursor: pointer
+  min-height: 40px
+  z-index: 2
+
+.icon
+  display: flex
+  align-items: center
+  transform: rotate(0deg)
+  transition: .3s

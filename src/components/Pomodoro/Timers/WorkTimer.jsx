@@ -5,8 +5,6 @@ import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 
 const WorkTimer = (props) => {
 
-    console.log('work')
-
     const minutes = Math.floor(props.workSeconds / 60);
     const seconds = props.workSeconds % 60;
 
