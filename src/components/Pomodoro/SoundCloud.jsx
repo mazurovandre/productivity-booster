@@ -42,13 +42,13 @@ const SoundCloud = (props) => {
 
     return (
         <div>
-            <Box sx={{ width: "300px", mx: 'auto', textAlign: 'left' }}>
+            <Box sx={{ minWidth: "325px", mx: 'auto', textAlign: 'left' }}>
                 <FormControlLabel
                     control={<Switch checked={isPlayingMusic} onChange={togglePlayingMusic} />}
                     label="Playing Music"
                 />
             </Box>
-            <Box sx={{ width: "300px", mx: 'auto', textAlign: 'left' }}>
+            <Box sx={{ minWidth: "325px", mx: 'auto', textAlign: 'left' }}>
                 <FormControlLabel
                     control={<Switch checked={isShownPlugin} onChange={toggleShownPlugin} />}
                     label="Show SoundCloud Plugin"
@@ -56,7 +56,7 @@ const SoundCloud = (props) => {
                 <Box>
                     <div>
                         <Collapse in={isShownPlugin}
-                                  addEndListener=''>
+                                  addEndListener={() => {}}>
                             <ReactPlayer id='dropdown'
                                          className="soundcloud__widget"
                                          {...pluginState}
