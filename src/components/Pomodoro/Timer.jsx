@@ -3,35 +3,36 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
-import '../../Style.scss'
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const Timer = (props) => {
 
-    // const initialWorkTime = 1500;
-    // const initialBreakTime = 300;
+    const initialWorkTime = 1500;
+    const initialBreakTime = 300;
 
-    const [workSeconds, setWorkSeconds] = useState(1500);
-    const [breakSeconds, setBreakSeconds] = useState(300);
+    const [workSeconds, setWorkSeconds] = useState(initialWorkTime);
+    const [breakSeconds, setBreakSeconds] = useState(initialBreakTime);
 
-
-
-
-    const workCountDown = () => {
-        setWorkSeconds(prevState => prevState - 1)
+    const countDown = (isWorkTimer) => {
+        isWorkTimer ?
+            setWorkSeconds(prevState => prevState - 1) :
+            setBreakSeconds(prevState => prevState - 1)
     }
 
-    const breakCountDown = () => {
-        setBreakSeconds(prevState => prevState - 1)
+    const changeTimer = (isSetWorkTimer) => {
+        props.changeTimerType(isSetWorkTimer);
+        setWorkSeconds(initialWorkTime);
+        setBreakSeconds(initialBreakTime);
     }
 
     const changeTimeDisplay = () => {
 
-        let minutes = 20;
-        let seconds = 0;
+        let minutes, seconds;
 
         if (props.isWorking) {
             minutes = Math.floor(workSeconds / 60);
@@ -41,29 +42,20 @@ const Timer = (props) => {
             seconds = breakSeconds % 60;
         }
 
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        }
+        if (minutes < 10) {minutes = '0' + minutes}
+        if (seconds < 10) {seconds = '0' + seconds}
 
         return `${minutes} : ${seconds}`
-
     }
 
     const displayTime = changeTimeDisplay();
 
-
     useEffect(() => {
-
-
-
-
         if(props.isCounting) {
             const timer = setTimeout(() => {
-                props.isWorking ? workCountDown() : breakCountDown();
+                props.isWorking ? countDown(true) : countDown(false);
+                if (props.isWorking && workSeconds === 0) { changeTimer(false) }
+                if (!props.isWorking && breakSeconds === 0) { changeTimer(true) }
             }, 1000);
             return () => clearTimeout(timer);
         }
@@ -73,53 +65,83 @@ const Timer = (props) => {
         props.toggleIsCounting()
     }
 
+    const resetTimer = () => {
+        setWorkSeconds(initialWorkTime);
+        setBreakSeconds(initialBreakTime);
+    }
 
+    const addMinute = () => {
+        if (props.isWorking) {
+            setWorkSeconds(prevState => prevState + 60)
+        } else {
+            setBreakSeconds(prevState => prevState + 60)
+        }
+    }
 
-    // const setBreakTimer = () => {
-    //     setState(prevState => ({
-    //         ...prevState,
-    //         isWorkTimer: false
-    //     }))
-    // }
+    const removeMinute = () => {
+        if (props.isWorking && workSeconds > 60) {
+            setWorkSeconds(prevState => prevState - 60)
+        }
+        if (!props.isWorking && breakSeconds > 60) {
+            setBreakSeconds(prevState => prevState - 60)
+        }
+    }
 
     return (
-        <div>
-            <div>
-                <FormControl>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        name="radio-buttons-group"
-                    >
-                        <FormControlLabel control={<Radio
-                            checked={props.isWorking}
-                            disabled={props.isCounting}
-                            onChange={() => props.changeTimerType(true)}
-                        />} label="Work" />
-                        <FormControlLabel control={<Radio
-                            checked={!props.isWorking}
-                            disabled={props.isCounting}
-                            onChange={() => props.changeTimerType(false)}
-                        />} label="Break" />
-                    </RadioGroup>
-                </FormControl>
-            </div>
-            <div className="timer">
-                <Button variant="contained"><RemoveIcon/></Button>
-                <h3>
+        <Box sx={{
+            marginBottom: '25px'
+        }}>
+            <FormControl>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group">
+                    <FormControlLabel control={<Radio
+                        checked={props.isWorking}
+                        disabled={props.isCounting}
+                        onChange={() => props.changeTimerType(true)}
+                    />} label="Work" />
+                    <FormControlLabel control={<Radio
+                        checked={!props.isWorking}
+                        disabled={props.isCounting}
+                        onChange={() => props.changeTimerType(false)}
+                    />} label="Break" />
+                </RadioGroup>
+            </FormControl>
+            <Box sx={{
+                display: "flex",
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                margin: '25px 0'
+            }}>
+                <Button variant="contained"
+                        disabled={props.isCounting}
+                        onClick={removeMinute}>
+                    <RemoveIcon/>
+                </Button>
+                <Typography variant="h3" sx={{
+                    fontSize: '52px'
+                }}>
                     {displayTime}
-                </h3>
-                <Button variant="contained"><AddIcon/></Button>
-            </div>
+                </Typography>
+                <Button variant="contained"
+                        disabled={props.isCounting}
+                        onClick={addMinute}>
+                    <AddIcon/>
+                </Button>
+            </Box>
             <ButtonGroup>
                 <Button variant="contained"
                         onClick={startTimer}>
                     {props.isCounting ? 'Pause' : 'Start'}
                 </Button>
-                <Button variant="contained">Reset</Button>
+                <Button variant="contained"
+                        disabled={props.isCounting}
+                        onClick={resetTimer}>
+                    Reset
+                </Button>
             </ButtonGroup>
-
-        </div>
+        </Box>
     );
 };
 

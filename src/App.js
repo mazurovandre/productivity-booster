@@ -8,17 +8,19 @@ import Container from "@mui/material/Container";
 
 function App() {
     return (
-        <Container>
-            <Header />
-            <Grid container spacing={2}>
-                <Grid item md={6} sm={12} xs={12}>
-                    <Pomodoro/>
+        <>
+            <Header/>
+            <Container sx={{textAlign: 'center'}}>
+                <Grid container spacing={2}>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <Pomodoro/>
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <ToDoList />
+                    </Grid>
                 </Grid>
-                {/*<Grid item md={6} sm={12} xs={12}>*/}
-                {/*    <ToDoList />*/}
-                {/*</Grid>*/}
-            </Grid>
-        </Container>
+            </Container>
+        </>
     );
 }
 

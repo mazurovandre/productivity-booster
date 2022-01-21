@@ -1,22 +1,23 @@
 import React, {useState} from 'react';
 import SoundCloud from "./SoundCloud";
 import Timer from "./Timer";
+import Box from "@mui/material/Box";
 
 const Pomodoro = () => {
 
     const [isCounting, setIsCounting] = useState(false);
-    const [isWorking, setIsWorking] = useState(false);
+    const [isWorking, setIsWorking] = useState(true);
 
     const toggleIsCounting = () => {
         setIsCounting(prevState => !prevState)
     }
 
     const changeTimerType = (isWork) => {
-        setIsWorking(prevState => isWork)
+        setIsWorking(isWork)
     }
 
     return (
-        <div className="pomodoro">
+        <Box>
             <Timer
                 isCounting={isCounting}
                 isWorking={isWorking}
@@ -24,7 +25,7 @@ const Pomodoro = () => {
                 changeTimerType={changeTimerType}
             />
             <SoundCloud isPlaying={isCounting && isWorking}/>
-        </div>
+        </Box>
     );
 };
 
