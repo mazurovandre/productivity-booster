@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
-import style from './SoundCloud.module.sass';
-import LeftOutlined from "@ant-design/icons/lib/icons/LeftOutlined";
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+import Button from "@mui/material/Button";
 
 const SoundCloud = (props) => {
 
     const [state, setState] = useState({
         url: 'https://soundcloud.com/user-557907489/sets/work',
         playing: false,
-        // height: '166px',
         width: '100%'
     })
 
@@ -27,22 +26,22 @@ const SoundCloud = (props) => {
     }, [props.isPlaying])
 
     const toggleWidget = (e) => {
-        e.target.closest('#dropdown').classList.toggle(style.active)
+        e.target.closest('#dropdown').classList.toggle("active");
     }
 
     return (
-        <div id='dropdown' className={style.dropdown}>
-            <div className={style.title} onClick={toggleWidget}>
+        <div className="soundcloud">
+            <Button variant="contained" className="soundcloud__title" onClick={toggleWidget}>
                 SoundCloud Music
-                <LeftOutlined className={style.icon}/>
-            </div>
-            <ReactPlayer className={style.widget}
+                <ChevronLeftOutlinedIcon className="soundcloud__icon"/>
+            </Button>
+            <ReactPlayer id='dropdown'
+                         className="soundcloud__widget"
                          {...state}
                          onPause={pauseTrack}
                          onPlay={playTrack}
             />
         </div>
-
     )
 }
 

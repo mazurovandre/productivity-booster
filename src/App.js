@@ -1,16 +1,24 @@
-import './App.sass';
+// import './App.sass';
 import Pomodoro from "./components/Pomodoro/Pomodoro";
-import ToDoList from "./components/ToDoList/ToDoList";
+import ToDoList from "./components/ToDo/ToDoList";
+import Grid from "@mui/material/Grid";
+import Header from "./components/Header";
+import React from "react";
+import Container from "@mui/material/Container";
 
 function App() {
     return (
-        <div className="App">
-            <h1 className="title">Productivity Booster</h1>
-            <div className="wrapper">
-                <Pomodoro/>
-                <ToDoList />
-            </div>
-        </div>
+        <Container>
+            <Header />
+            <Grid container spacing={2}>
+                <Grid item md={6} sm={12} xs={12}>
+                    <Pomodoro/>
+                </Grid>
+                {/*<Grid item md={6} sm={12} xs={12}>*/}
+                {/*    <ToDoList />*/}
+                {/*</Grid>*/}
+            </Grid>
+        </Container>
     );
 }
 

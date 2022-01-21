@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import style from './ToDoList.module.scss'
-import TaskList from "./TaskList/TaskList";
-import TaskForm from "./TaskForm/TaskForm";
+import TaskList from "./TaskList";
+import TaskForm from "./TaskForm";
 
 const ToDoList = () => {
 
@@ -52,8 +51,8 @@ const ToDoList = () => {
     }
 
     return (
-        <div className={style.todo}>
-            <div className={style.container}>
+        <div>
+            <div>
                 <TaskForm
                     inputText={inputText}
                     addTask={addTask}

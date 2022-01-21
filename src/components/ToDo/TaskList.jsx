@@ -1,5 +1,4 @@
 import React from 'react';
-import style from "./TaskList.module.scss";
 
 const TaskList = (props) => {
 
@@ -9,23 +8,21 @@ const TaskList = (props) => {
     const activeList = activeTasks.map(task => <li
         tabIndex="0"
         key={Math.floor(Math.random() * 1000000)}
-        data-number={task.id}
-        className={style.task}>
+        data-number={task.id}>
         {task.title}
     </li>);
 
     const doneList = doneTasks.map(task => <li
         tabIndex="0"
         key={Math.floor(Math.random() * 1000000)}
-        data-number={task.id}
-        className={style.task + " " + style.task_done}>
+        data-number={task.id}>
         {task.title}
     </li>);
 
     return (
-        <ul className={style.list} onClick={(e) => {props.changeStatus(e)}}>
+        <ul onClick={(e) => {props.changeStatus(e)}}>
             {activeList}
-            {(!!doneTasks.length && !!activeTasks.length) && <span className={style.line}/>}
+            {(!!doneTasks.length && !!activeTasks.length) && <li/>}
             {doneList}
         </ul>
     );
