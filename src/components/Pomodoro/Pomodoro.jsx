@@ -10,11 +10,11 @@ const Pomodoro = () => {
 
     const toggleIsCounting = () => {
         setIsCounting(prevState => !prevState)
-    }
+    };
 
     const changeTimerType = (isWork) => {
         setIsWorking(isWork)
-    }
+    };
 
     return (
         <Box>

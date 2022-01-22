@@ -18,38 +18,6 @@ const Timer = (props) => {
     const [workSeconds, setWorkSeconds] = useState(initialWorkTime);
     const [breakSeconds, setBreakSeconds] = useState(initialBreakTime);
 
-    const countDown = (isWorkTimer) => {
-        isWorkTimer ?
-            setWorkSeconds(prevState => prevState - 1) :
-            setBreakSeconds(prevState => prevState - 1)
-    }
-
-    const changeTimer = (isSetWorkTimer) => {
-        props.changeTimerType(isSetWorkTimer);
-        setWorkSeconds(initialWorkTime);
-        setBreakSeconds(initialBreakTime);
-    }
-
-    const changeTimeDisplay = () => {
-
-        let minutes, seconds;
-
-        if (props.isWorking) {
-            minutes = Math.floor(workSeconds / 60);
-            seconds = workSeconds % 60;
-        } else {
-            minutes = Math.floor(breakSeconds / 60);
-            seconds = breakSeconds % 60;
-        }
-
-        if (minutes < 10) {minutes = '0' + minutes}
-        if (seconds < 10) {seconds = '0' + seconds}
-
-        return `${minutes} : ${seconds}`
-    }
-
-    const displayTime = changeTimeDisplay();
-
     useEffect(() => {
         if(props.isCounting) {
             const timer = setTimeout(() => {
@@ -61,14 +29,26 @@ const Timer = (props) => {
         }
     });
 
+    const countDown = (isWorkTimer) => {
+        isWorkTimer ?
+            setWorkSeconds(prevState => prevState - 1) :
+            setBreakSeconds(prevState => prevState - 1)
+    }
+
+    const changeTimer = (isSetWorkTimer) => {
+        props.changeTimerType(isSetWorkTimer);
+        setWorkSeconds(initialWorkTime);
+        setBreakSeconds(initialBreakTime);
+    };
+
     const startTimer = () => {
         props.toggleIsCounting()
-    }
+    };
 
     const resetTimer = () => {
         setWorkSeconds(initialWorkTime);
         setBreakSeconds(initialBreakTime);
-    }
+    };
 
     const addMinute = () => {
         if (props.isWorking) {
@@ -86,6 +66,25 @@ const Timer = (props) => {
             setBreakSeconds(prevState => prevState - 60)
         }
     }
+
+    const changeTimeDisplay = () => {
+        let minutes, seconds;
+
+        if (props.isWorking) {
+            minutes = Math.floor(workSeconds / 60);
+            seconds = workSeconds % 60;
+        } else {
+            minutes = Math.floor(breakSeconds / 60);
+            seconds = breakSeconds % 60;
+        }
+
+        if (minutes < 10) {minutes = '0' + minutes}
+        if (seconds < 10) {seconds = '0' + seconds}
+
+        return `${minutes} : ${seconds}`
+    }
+
+    const displayTime = changeTimeDisplay();
 
     return (
         <Box sx={{

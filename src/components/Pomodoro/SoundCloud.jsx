@@ -13,24 +13,22 @@ const SoundCloud = (props) => {
         url: 'https://soundcloud.com/user-557907489/sets/work',
         playing: false,
         width: '100%'
-    })
-
-    const pauseTrack = () => {
-        setPluginState(prevState => ({...prevState, playing: false}))
-    }
-    const playTrack = () => {
-        setPluginState(prevState => ({...prevState, playing: true}))
-    }
+    });
 
     useEffect(() => {
         setPluginState(prevState => ({
             ...prevState,
             playing: props.isPlaying && isPlayingMusic
         }))
-        console.log()
-    }, [props.isPlaying, isPlayingMusic])
+    }, [props.isPlaying, isPlayingMusic]);
 
+    const pauseTrack = () => {
+        setPluginState(prevState => ({...prevState, playing: false}))
+    };
 
+    const playTrack = () => {
+        setPluginState(prevState => ({...prevState, playing: true}))
+    };
 
     const toggleShownPlugin = () => {
         setIsShownPlugin((prev) => !prev);
@@ -41,7 +39,7 @@ const SoundCloud = (props) => {
     };
 
     return (
-        <div>
+        <>
             <Box sx={{ minWidth: "325px", mx: 'auto', textAlign: 'left' }}>
                 <FormControlLabel
                     control={<Switch checked={isPlayingMusic} onChange={togglePlayingMusic} />}
@@ -54,20 +52,18 @@ const SoundCloud = (props) => {
                     label="Show SoundCloud Plugin"
                 />
                 <Box>
-                    <div>
-                        <Collapse in={isShownPlugin}
-                                  addEndListener={() => {}}>
-                            <ReactPlayer id='dropdown'
-                                         className="soundcloud__widget"
-                                         {...pluginState}
-                                         onPause={pauseTrack}
-                                         onPlay={playTrack}
-                            />
-                        </Collapse>
-                    </div>
+                    <Collapse in={isShownPlugin}
+                              addEndListener={() => {}}>
+                        <ReactPlayer id='dropdown'
+                                     className="soundcloud__widget"
+                                     {...pluginState}
+                                     onPause={pauseTrack}
+                                     onPlay={playTrack}
+                        />
+                    </Collapse>
                 </Box>
             </Box>
-        </div>
+        </>
     )
 }
 
